@@ -1,6 +1,6 @@
 (library
  (name aoc)
- (modules day1 general)
+ (modules day1 day2 general)
+ (libraries str)
  (inline_tests
   (backend qtest.lib)))
-
