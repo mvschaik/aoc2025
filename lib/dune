@@ -1,2 +1,6 @@
 (library
- (name aoc))
+ (name aoc)
+ (modules day1 general)
+ (inline_tests
+  (backend qtest.lib)))
+
