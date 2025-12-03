@@ -6,6 +6,11 @@ let split_into_pair s =
       exit 1
 
 let rec pow10 i = match i with 1 -> 1 | _ -> 10 * pow10 (i - 1)
+(*$=
+  1     (pow10 1)
+  10    (pow10 2)
+  100   (pow10 3)
+*)
 
 let split_in_half s =
   let split = (String.length s + 1) / 2 in
