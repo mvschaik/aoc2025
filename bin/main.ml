@@ -3,12 +3,12 @@ let () =
     Printf.eprintf "Usage: %s <day number> <filename>\n" Sys.argv.(0);
     exit 1
   end;
+  let filename = Sys.argv.(2) in
   match int_of_string Sys.argv.(1) with
-  | 1 ->
-      let lines = General.read_file_to_lines Sys.argv.(2) in
-      Day1.solve lines
-  | 2 -> Day2.solve (General.read_file_to_string Sys.argv.(2))
-  | 3 -> General.read_file_to_lines Sys.argv.(2) |> Day3.solve
+  | 1 -> General.read_file_to_lines filename |> Day1.solve
+  | 2 -> General.read_file_to_string filename |> Day2.solve
+  | 3 -> General.read_file_to_lines filename |> Day3.solve
+  | 4 -> General.read_file_to_string filename |> Day4.solve
   | _ ->
       Printf.eprintf "Invalid day %s\n" Sys.argv.(1);
       exit 1
