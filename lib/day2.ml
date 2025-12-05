@@ -46,7 +46,6 @@ let find_invalid_numbers part (first, last) =
           |> Seq.drop_while (fun i -> i < first_i)
           |> Seq.take_while (fun i -> i <= last_i)))
 
-let sum xs = Seq.fold_left ( + ) 0 xs
 let unique seq = seq |> IntSet.of_seq |> IntSet.to_seq
 
 let solve_part part input =
@@ -54,7 +53,7 @@ let solve_part part input =
   |> Str.split (Str.regexp ",")
   |> List.map split_into_pair |> List.to_seq
   |> Seq.flat_map (find_invalid_numbers part)
-  |> unique |> sum
+  |> unique |> General.sum_seq
 
 let solve input =
   let part1 = solve_part 1 input in
