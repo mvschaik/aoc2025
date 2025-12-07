@@ -10,6 +10,7 @@ let () =
   | 3 -> General.read_file_to_lines filename |> Day3.solve
   | 4 -> General.read_file_to_string filename |> Day4.solve
   | 5 -> General.read_file_to_string filename |> Day5.solve
+  | 6 -> General.read_file_to_string filename |> Day6.solve
   | _ ->
       Printf.eprintf "Invalid day %s\n" Sys.argv.(1);
       exit 1
