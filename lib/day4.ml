@@ -1,11 +1,5 @@
 let print_map world =
-  let min_row, max_row, min_col, max_col =
-    Hashtbl.fold
-      (fun (row, col) _ (min_row, max_row, min_col, max_col) ->
-        (min row min_row, max row max_row, min col min_col, max col max_col))
-      world
-      (max_int, min_int, max_int, min_int)
-  in
+  let min_row, max_row, min_col, max_col = General.dims world in
   for row = min_row to max_row do
     for col = min_col to max_col do
       match Hashtbl.find_opt world (row, col) with
@@ -14,13 +8,6 @@ let print_map world =
     done;
     Printf.printf "\n"
   done
-
-let parse_map input : (int * int, char) Hashtbl.t =
-  Str.split (Str.regexp "\n") input
-  |> List.to_seq
-  |> Seq.mapi (fun row line ->
-      String.to_seq line |> Seq.mapi (fun col c -> ((row, col), c)))
-  |> Seq.concat |> Hashtbl.of_seq
 
 let rec get_somes xs =
   match xs with
@@ -62,7 +49,7 @@ let rec clear_rolls world =
   end
 
 let solve input =
-  let world = parse_map input in
+  let world = General.parse_map input in
   let num_reachable =
     Hashtbl.to_seq world
     |> Seq.filter (fun (pos, c) -> c = '@' && can_be_removed pos world)
