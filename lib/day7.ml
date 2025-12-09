@@ -27,25 +27,21 @@ let find_start world =
       exit 1
   | Some col -> (0, col)
 
-let memo_rec f =
+let num_splits world pos =
   let h = Hashtbl.create 16 in
-  let g x =
-    try Hashtbl.find h x
+  let rec inner pos =
+    try Hashtbl.find h pos
     with Not_found ->
-      let y = f x in
-      Hashtbl.add h x y;
-      y
+      let res =
+        match Hashtbl.find_opt world pos with
+        | Some '^' -> 1 + inner (left pos) + inner (right pos)
+        | Some '.' -> inner (down pos)
+        | _ -> 0
+      in
+      Hashtbl.add h pos res;
+      res
   in
-  g
-
-let rec num_splits =
-  let num_splits_inner world pos =
-    match Hashtbl.find_opt world pos with
-    | Some '^' -> 1 + num_splits world (left pos) + num_splits world (right pos)
-    | Some '.' -> num_splits world (down pos)
-    | _ -> 0
-  in
-  memo_rec num_splits_inner
+  inner pos
 
 let solve input =
   let world = General.parse_map input in
@@ -56,4 +52,4 @@ let solve input =
   |> Printf.printf "Part 1: %d\n";
 
   let start = find_start world in
-  Printf.printf "Part 2: %d\n" (num_splits world (down start))
+  Printf.printf "Part 2: %d\n" (1 + num_splits world (down start))
