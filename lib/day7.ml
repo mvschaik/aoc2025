@@ -3,6 +3,10 @@ let left (row, col) = (row, col - 1)
 let right (row, col) = (row, col + 1)
 let down (row, col) = (row + 1, col)
 
+(*$=
+  (1, 2) (up (2, 2))
+*)
+
 let rec is_connected world pos =
   match Hashtbl.find_opt world pos with
   | Some 'S' -> true
